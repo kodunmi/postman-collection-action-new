@@ -244,9 +244,9 @@ function run() {
                         : `/collections`;
                     // Fetch the list of existing collections
                     const { data: existingCollections } = yield restClient.get('/collections');
-                    core.info(`collections exists: ${existingCollections.name}`);
+                    core.info(`collections exists: ${existingCollections.collections}`);
                     // Check if a collection with the same name exists
-                    const existingCollection = existingCollections.find((collection) => collection.name === localCollection.info.name);
+                    const existingCollection = existingCollections.collections.find((collection) => collection.name === localCollection.info.name);
                     // Delete the existing collection if it exists
                     if (existingCollection) {
                         core.info(`Collection exists ${existingCollection.id}`);

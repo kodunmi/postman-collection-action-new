@@ -230,10 +230,10 @@ async function run(): Promise<void> {
             '/collections'
           )
 
-          core.info(`collections exists: ${existingCollections.name}`)
+          core.info(`collections exists: ${existingCollections.collections}`)
 
           // Check if a collection with the same name exists
-          const existingCollection = existingCollections.find(
+          const existingCollection = existingCollections.collections.find(
             (collection: {name: string}) =>
               collection.name === localCollection.info.name
           )
