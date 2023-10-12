@@ -210,7 +210,7 @@ const restClient: AxiosInstance = axios.create({
 
 async function run(): Promise<void> {
   try {
-    await loadLocalPostmanCollections('storage/app/postman')
+    await loadLocalPostmanCollections('storage/app/scribe')
 
     if (localPostmanCollections.length === 0) {
       // No local postman collections found so exit early
