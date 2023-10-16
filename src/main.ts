@@ -252,7 +252,7 @@ async function run(): Promise<void> {
           })
 
           core.info(
-            `This is the return from collection creation ${response.data}`
+            `This is the return from collection creation ${response.data}, all the body ${response}`
           )
 
           core.info(
