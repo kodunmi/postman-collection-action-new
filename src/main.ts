@@ -252,6 +252,10 @@ async function run(): Promise<void> {
           })
 
           core.info(
+            `This is the return from collection creation ${response.data}`
+          )
+
+          core.info(
             `Successfully created collection ${response.data?.collection?.name} with Postman ID ${response.data?.collection?.id}`
           )
         } catch (error: any) {
