@@ -230,7 +230,11 @@ async function run(): Promise<void> {
             '/collections'
           )
 
-          core.info(`collections exists: ${existingCollections.collections}`)
+          core.info(
+            `collections exists: ${JSON.stringify(
+              existingCollections.collections
+            )}`
+          )
 
           // Check if a collection with the same name exists
           const existingCollection = existingCollections.collections.find(
@@ -259,7 +263,25 @@ async function run(): Promise<void> {
             `Successfully created collection ${response.data?.collection?.name} with Postman ID ${response.data?.collection?.id}`
           )
         } catch (error: any) {
-          core.error(`Error creating collection: ${error} - ${error}`)
+          // core.error(`Error creating collection: ${error} - ${error}`)
+          // core.setFailed(
+          //   `Errors processing Postman Collection(s) - Please see the output above`
+          // )
+
+          // Log the error message and details
+          if (error.response) {
+            // If there's a response object with details
+            core.error(`Error with request: ${error.message}`)
+            core.error(`Status Code: ${error.response.status}`)
+            core.error(`Response Data: ${JSON.stringify(error.response.data)}`)
+          } else if (error.request) {
+            // If the request was made but no response was received
+            core.error(`Error making request: ${error.message}`)
+          } else {
+            // Other errors
+            core.error(`Error: ${error.message}`)
+          }
+
           core.setFailed(
             `Errors processing Postman Collection(s) - Please see the output above`
           )

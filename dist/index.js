@@ -244,7 +244,7 @@ function run() {
                         : `/collections`;
                     // Fetch the list of existing collections
                     const { data: existingCollections } = yield restClient.get('/collections');
-                    core.info(`collections exists: ${existingCollections.collections}`);
+                    core.info(`collections exists: ${JSON.stringify(existingCollections.collections)}`);
                     // Check if a collection with the same name exists
                     const existingCollection = existingCollections.collections.find((collection) => collection.name === localCollection.info.name);
                     // Delete the existing collection if it exists
@@ -262,7 +262,25 @@ function run() {
                     core.info(`Successfully created collection ${(_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.collection) === null || _b === void 0 ? void 0 : _b.name} with Postman ID ${(_d = (_c = response.data) === null || _c === void 0 ? void 0 : _c.collection) === null || _d === void 0 ? void 0 : _d.id}`);
                 }
                 catch (error) {
-                    core.error(`Error creating collection: ${error} - ${error}`);
+                    // core.error(`Error creating collection: ${error} - ${error}`)
+                    // core.setFailed(
+                    //   `Errors processing Postman Collection(s) - Please see the output above`
+                    // )
+                    // Log the error message and details
+                    if (error.response) {
+                        // If there's a response object with details
+                        core.error(`Error with request: ${error.message}`);
+                        core.error(`Status Code: ${error.response.status}`);
+                        core.error(`Response Data: ${JSON.stringify(error.response.data)}`);
+                    }
+                    else if (error.request) {
+                        // If the request was made but no response was received
+                        core.error(`Error making request: ${error.message}`);
+                    }
+                    else {
+                        // Other errors
+                        core.error(`Error: ${error.message}`);
+                    }
                     core.setFailed(`Errors processing Postman Collection(s) - Please see the output above`);
                 }
             })));
